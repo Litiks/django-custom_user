@@ -6,6 +6,6 @@ from custom_user.utils import clean_password as my_clean_password
 
 class MyAccountAdapter(DefaultAccountAdapter):
 
-    def clean_password(self, password):
+    def clean_password(self, password, user=None):
         """ Validates a password. """
         return my_clean_password(password)
