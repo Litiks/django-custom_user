@@ -5,5 +5,10 @@ setup(
   name='django-custom_user',
   description='A custom django user model, with some basic enhancements.',
   packages=['custom_user'],
-  requires=['django-allauth', 'zxcvbn', 'django-ratelimit', 'django-simple-captcha'],
+  install_requires=[
+    'django-allauth', 
+    'zxcvbn', 
+    'django-ratelimit', 
+    'django-simple-captcha',
+  ],
 )
