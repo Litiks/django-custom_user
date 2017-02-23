@@ -24,8 +24,8 @@ Integrate
 ---------
 
 1. Add 'custom_user' to your settings.INSTALLED_APPS
-2. Add to your settings:
-
+2. Follow instructions for [installing django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html)
+3. settings.py:
 ```
 # custom_user (Custom User Model):
 # https://docs.djangoproject.com/en/1.8/ref/settings/#auth-user-model
@@ -46,7 +46,13 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True     # remember credentials for 3 weeks
 ACCOUNT_LOGOUT_ON_GET = True        # don't show the logout confirmation. Just logout immediately.
 ACCOUNT_ADAPTER = 'custom_user.adapter.MyAccountAdapter'
-LOGIN_URL = "/"     # we change this, so that users see the Facebook login prompt, rather than the traditional username login page.
-LOGIN_REDIRECT_URL = "/"    # this isn't really an allauth-related setting
+```
+4. urls.py:
+```
+urlpatterns = [
+    ...
+    url(r'^accounts/', include('custom_user.urls')),
+    ...
+]
 ```
 
