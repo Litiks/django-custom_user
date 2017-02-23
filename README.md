@@ -24,7 +24,7 @@ Integrate
 ---------
 
 1. Add 'custom_user' to your settings.INSTALLED_APPS
-2. Follow instructions for [installing django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html)
+2. Follow instructions to [configure django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html)
 3. settings.py:
 ```
 # custom_user (Custom User Model):
