@@ -10,10 +10,4 @@ class Migration(migrations.Migration):
         ('custom_user', '0001_initial'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='emailuser',
-            name='person_version',
-            field=models.OneToOneField(related_name='user', null=True, blank=True, to='person.PersonVersion'),
-        ),
-    ]
+    operations = []

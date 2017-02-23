@@ -10,9 +10,4 @@ class Migration(migrations.Migration):
         ('custom_user', '0002_emailuser_person_version'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='emailuser',
-            name='person_version',
-        ),
-    ]
+    operations = []
