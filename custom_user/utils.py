@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 from django import forms
-from zxcvbn import password_strength
+from zxcvbn import zxcvbn
 
 def clean_password(password):
         user_inputs = [
             'doubleh',
             #possibly include user fields like the user's email address and name
         ]
-        ps = password_strength(password, user_inputs)
+        ps = zxcvbn(password, user_inputs=user_inputs)
         if password and ps['score'] < 2:   # the score is from 0 to 4. 4 being the most secure.
             raise forms.ValidationError(
                 "The password does not meet security requirements.",

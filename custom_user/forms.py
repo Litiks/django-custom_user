@@ -24,7 +24,7 @@ class EmailUserCreationForm(forms.ModelForm):
     }
     password_js = """
         <span id='id_password1_help'></span>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js'></script>
         <script>
             var input = document.getElementById('id_password1');
             var help = document.getElementById('id_password1_help');
@@ -48,13 +48,11 @@ class EmailUserCreationForm(forms.ModelForm):
                     score_style = 'color:green;'
                 }
                 if(score_text=='too weak'){
-                    try {
-                        dictionary_name = analysis.match_sequence[0].dictionary_name
-                        if (dictionary_name){
-                            score_text += " - common " + dictionary_name
-                        }
-                    }catch(err) {
-                        // do nothing
+                    if(analysis.feedback.warning){
+                        score_text += " - " + analysis.feedback.warning
+                    }
+                    if(analysis.feedback.suggestions){
+                        score_text += "<br>Tip: "+analysis.feedback.suggestions
                     }
                 }
                 help.innerHTML = "<span style='"+score_style+"'>Security Score: " + score_text + "</span>"
