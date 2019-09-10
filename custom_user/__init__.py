@@ -3,6 +3,7 @@
     This app is derived from: https://github.com/jcugat/django-custom-user
     It has been modified to include some special login handling (for password integrity).
 """
+from __future__ import unicode_literals
 
 __version__ = '0.5'
 

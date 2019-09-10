@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Custom adjustments to django-allauth
 
 from django.conf import settings
