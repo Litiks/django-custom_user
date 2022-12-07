@@ -8,7 +8,7 @@ setup(
   install_requires=[
     'django-allauth',
     'zxcvbn>=4',
-    'django-ratelimit',
+    'django-ratelimit==3.0.1',
     'django-simple-captcha',
   ],
 )
