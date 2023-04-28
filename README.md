@@ -5,7 +5,6 @@ Features:
 - email based login and account management
 - email verification (using allauth)
 - social logins (using allauth)
-- password integrity checks using zxcvbn
 - login attempt rate-limiting, enabling captcha
 
 Generally, this app should conform to Django's guidelines: 
@@ -45,7 +44,6 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True     # remember credentials for 3 weeks
 ACCOUNT_LOGOUT_ON_GET = True        # don't show the logout confirmation. Just logout immediately.
-ACCOUNT_ADAPTER = 'custom_user.adapter.MyAccountAdapter'
 ```
 4. urls.py:
 ```

@@ -7,7 +7,6 @@ setup(
   packages=['custom_user'],
   install_requires=[
     'django-allauth',
-    'zxcvbn>=4',
     'django-ratelimit==3.0.1',
     'django-simple-captcha',
   ],
