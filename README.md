@@ -5,7 +5,6 @@ Features:
 - email based login and account management
 - email verification (using allauth)
 - social logins (using allauth)
-- login attempt rate-limiting, enabling captcha
 
 Generally, this app should conform to Django's guidelines: 
 https://docs.djangoproject.com/en/1.10/topics/auth/customizing/#specifying-a-custom-user-model
@@ -25,7 +24,7 @@ Integrate
 1. Add 'custom_user' to your settings.INSTALLED_APPS
 2. Follow instructions to [configure django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html)
 3. settings.py:
-```
+```python
 # custom_user (Custom User Model):
 # https://docs.djangoproject.com/en/1.8/ref/settings/#auth-user-model
 AUTH_USER_MODEL = 'custom_user.EmailUser'
@@ -43,7 +42,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True     # remember credentials for 3 weeks
-ACCOUNT_LOGOUT_ON_GET = True        # don't show the logout confirmation. Just logout immediately.
 ```
 4. urls.py:
 ```
@@ -53,4 +51,36 @@ urlpatterns = [
     ...
 ]
 ```
+5. If you want to automatically revoke pwned passwords: settings.py
+```python
+# Specific to custom_user.
+# These validators are checked during login (rather than when the password is set)
+# If a password fails any of these validators; we perform an email verification.
+CUSTOM_USER_LOGIN_PASSWORD_VALIDATORS = [
+    {"NAME": "custom_user.password_validation.PwnedValidator"},
+]
+```
+6. If you want weak passwords to fall back to email-based login: settings.py
+```python
+ACCOUNT_LOGIN_BY_CODE_ENABLED = True       # enable login by emailed code.
 
+# disable password validation on creation, to allow users to set a weak password
+AUTH_PASSWORD_VALIDATORS = [
+    # {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    # {"NAME": "custom_user.password_validation.PwnedValidator"},
+]
+
+# Specific to custom_user.
+# These validators are checked during login (rather than when the password is set)
+# If a password fails any of these validators; we perform an email verification.
+CUSTOM_USER_LOGIN_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {"NAME": "custom_user.password_validation.CautiousPwnedValidator"},
+]
+```

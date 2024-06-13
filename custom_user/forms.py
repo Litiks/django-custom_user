@@ -1,13 +1,7 @@
-"""EmailUser forms."""
-from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import BaseUserCreationForm, ReadOnlyPasswordHashField
-from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
-
-from allauth.account.forms import LoginForm
-from captcha.fields import CaptchaField
 
 class EmailUserCreationForm(BaseUserCreationForm):
     """ A form for creating new users.
@@ -71,14 +65,3 @@ class EmailUserChangeForm(forms.ModelForm):
 
         """
         return self.initial["password"]
-
-class CaptchaLoginForm(LoginForm):
-    def __init__(self, *args, **kwargs):
-        super(CaptchaLoginForm, self).__init__(*args, **kwargs)
-        self.fields['captcha'] = CaptchaField()
-
-        # dirty re-ordering of fields.
-        if 'remember' in self.fields:
-            r = self.fields['remember']
-            del(self.fields['remember'])
-            self.fields['remember'] = r
