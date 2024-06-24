@@ -16,7 +16,15 @@ class MyLoginView(LoginView):
 
             email = form.cleaned_data['login']
             password = form.cleaned_data['password']
-            user = EmailUser.objects.get(email=email)
+            user = form.user
+
+            # Sanity check: ensure that form.user's email address matches the submitted email.
+            # Adding this while I scratch my head about https://litiks.sentry.io/issues/5526022591/, where EmailUser.objects.get() was failing here, because:
+            # - There was no user account with a matching email address
+            # - But the login form was somehow valid??
+            # It's as though the form validation logic selected a different user account than I'd expect?
+            if form.user.email != email:
+                raise Exception("emails do not match??")
 
             # run it through the PwnedValidator
             # TODO run it through ALL of the validators..
